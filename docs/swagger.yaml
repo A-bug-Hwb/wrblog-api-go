@@ -1,0 +1,2061 @@
+definitions:
+  model_base.BaseArticle:
+    properties:
+      IsOpen:
+        description: 是否公开文章
+        type: string
+      articleId:
+        description: 文章id
+        type: integer
+      articleUrl:
+        description: 文章路径
+        type: string
+      content:
+        description: 内容
+        type: string
+      groupId:
+        description: 组id
+        type: integer
+      labelIds:
+        description: 标签
+        type: string
+      libraryId:
+        description: 库id
+        type: integer
+      parentId:
+        description: 父级id
+        type: integer
+      status:
+        description: 状态
+        type: string
+      title:
+        description: 标题
+        type: string
+      typeId:
+        description: 类型
+        type: integer
+      userId:
+        description: 用户id
+        type: integer
+    type: object
+  model_base.BaseArticleGroup:
+    properties:
+      groupId:
+        description: 组id
+        type: integer
+      groupName:
+        description: 组名
+        type: string
+      libraryId:
+        description: 库id
+        type: integer
+      status:
+        description: 状态
+        type: string
+      userId:
+        description: 用户id
+        type: integer
+    type: object
+  model_base.BaseArticleLabel:
+    properties:
+      labelId:
+        description: 标签id
+        type: integer
+      labelName:
+        description: 标签名
+        type: string
+      status:
+        description: 状态
+        type: string
+      userId:
+        description: 用户id
+        type: integer
+    type: object
+  model_base.BaseArticleLibrary:
+    properties:
+      IsOpen:
+        description: 是否公开库
+        type: string
+      libraryId:
+        description: 库id
+        type: integer
+      libraryName:
+        description: 库名
+        type: string
+      libraryUrl:
+        description: 库的路径
+        type: string
+      status:
+        description: 状态
+        type: string
+      userId:
+        description: 用户id
+        type: integer
+    type: object
+  model_sys.SysDictData:
+    properties:
+      cssClass:
+        description: 样式属性（其他样式扩展）
+        type: string
+      dictCode:
+        description: 字典编码
+        type: integer
+      dictLabel:
+        description: 字典标签
+        type: string
+      dictSort:
+        description: 字典排序
+        type: integer
+      dictType:
+        description: 字典类型
+        type: string
+      dictValue:
+        description: 字典键值
+        type: string
+      isDefault:
+        description: 是否默认（Y是 N否）
+        type: string
+      listClass:
+        description: 表格回显样式
+        type: string
+      status:
+        description: 状态（0正常 1停用）
+        type: string
+    type: object
+  model_sys.SysDictType:
+    properties:
+      dictId:
+        description: 字典id
+        type: integer
+      dictName:
+        description: 字典名称
+        type: string
+      dictType:
+        description: 字典类型
+        type: string
+      status:
+        description: 状态
+        type: string
+    type: object
+  model_sys.SysMenu:
+    properties:
+      component:
+        description: 组件路径
+        type: string
+      icon:
+        description: 图标
+        type: string
+      isFrame:
+        description: 是否外链 0 是 1否
+        type: string
+      menuId:
+        description: 菜单id
+        type: integer
+      menuName:
+        description: 菜单名称
+        type: string
+      menuType:
+        description: 菜单类型
+        type: string
+      orderNum:
+        description: 排序
+        type: integer
+      parentId:
+        description: 上级id
+        type: integer
+      path:
+        description: 路由地址
+        type: string
+      perms:
+        description: 权限标识
+        type: string
+      query:
+        description: 参数
+        type: string
+      status:
+        description: 菜单状态（0正常 1停用）
+        type: string
+      visible:
+        description: 菜单状态（0显示 1隐藏）
+        type: string
+    type: object
+  rabbit.RabbitData:
+    properties:
+      content:
+        properties:
+          msg:
+            type: string
+          type:
+            type: string
+          userId:
+            type: string
+        type: object
+      type:
+        type: string
+      userId:
+        type: string
+    type: object
+  result.Result:
+    properties:
+      code:
+        type: integer
+      data: {}
+      msg:
+        type: string
+    type: object
+  token.LoginForm:
+    properties:
+      ak:
+        description: 账号（必填）
+        type: string
+      ck:
+        description: 验证码（登录时填写图片验证码，短信和邮箱则填写发送的验证码）
+        type: string
+      ckId:
+        description: 验证码id（验证码对应的id索引）
+        type: string
+      lt:
+        description: 登录类型（必填）1账号密码，2短信验证码，3邮箱验证码，4微信扫码
+        type: string
+      pk:
+        description: 密码（账号密码登录必填）
+        type: string
+      rkId:
+        description: rsa秘钥id（加密传输的秘钥id索引）
+        type: string
+    type: object
+  token.RegisterForm:
+    properties:
+      ck:
+        type: string
+      ckId:
+        type: string
+      cpk:
+        type: string
+      mobile:
+        type: string
+      pk:
+        type: string
+      rkId:
+        type: string
+      uk:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /auth/getImgCode:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 获取图片验证码
+      tags:
+      - Auth - 认证授权
+  /auth/getPublicKey:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 获取登录加密公钥
+      tags:
+      - Auth - 认证授权
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: loginForm
+        in: body
+        name: loginForm
+        required: true
+        schema:
+          $ref: '#/definitions/token.LoginForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 登录接口（无需加密）
+      tags:
+      - Auth - 认证授权
+  /auth/loginKey:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: loginForm
+        in: body
+        name: loginForm
+        required: true
+        schema:
+          $ref: '#/definitions/token.LoginForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 登录接口（加密）
+      tags:
+      - Auth - 认证授权
+  /auth/logout:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 退出登录
+      tags:
+      - Auth - 认证授权
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: registerForm
+        in: body
+        name: registerForm
+        required: true
+        schema:
+          $ref: '#/definitions/token.RegisterForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 登录接口（无需加密）
+      tags:
+      - Auth - 认证授权
+  /auth/registerKey:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: registerForm
+        in: body
+        name: registerForm
+        required: true
+        schema:
+          $ref: '#/definitions/token.RegisterForm'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 登录接口（加密）
+      tags:
+      - Auth - 认证授权
+  /base/baseArticle/{articleId}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: articleId
+        in: path
+        name: articleId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 获取文章详情
+      tags:
+      - Base - 文章管理
+  /base/baseArticle/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: baseArticle
+        in: body
+        name: baseArticle
+        required: true
+        schema:
+          $ref: '#/definitions/model_base.BaseArticle'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 添加文章
+      tags:
+      - Base - 文章管理
+  /base/baseArticle/deletes:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: articleIds
+        in: query
+        name: articleIds
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 删除文章（实体删除）
+      tags:
+      - Base - 文章管理
+  /base/baseArticle/edit:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: baseArticle
+        in: body
+        name: baseArticle
+        required: true
+        schema:
+          $ref: '#/definitions/model_base.BaseArticle'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 修改文章
+      tags:
+      - Base - 文章管理
+  /base/baseArticle/myPage:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 是否公开文章
+        in: query
+        name: IsOpen
+        type: string
+      - description: 文章id
+        in: query
+        name: articleId
+        type: integer
+      - description: 文章路径
+        in: query
+        name: articleUrl
+        type: string
+      - description: 内容
+        in: query
+        name: content
+        type: string
+      - description: 开始时间
+        in: query
+        name: endTime
+        type: string
+      - description: 组id
+        in: query
+        name: groupId
+        type: integer
+      - description: 标签
+        in: query
+        name: labelIds
+        type: string
+      - description: 库id
+        in: query
+        name: libraryId
+        type: integer
+      - description: 当前页（非分页接口不传）
+        in: query
+        name: pageNum
+        type: integer
+      - description: 每页条数（非分页接口不传）
+        in: query
+        name: pageSize
+        type: integer
+      - description: 父级id
+        in: query
+        name: parentId
+        type: integer
+      - description: 开始时间
+        in: query
+        name: startTime
+        type: string
+      - description: 状态
+        in: query
+        name: status
+        type: string
+      - description: 标题
+        in: query
+        name: title
+        type: string
+      - description: 类型
+        in: query
+        name: typeId
+        type: integer
+      - description: 用户id
+        in: query
+        name: userId
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 获取当前用户的文章列表
+      tags:
+      - Base - 文章管理
+  /base/baseArticle/page:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 是否公开文章
+        in: query
+        name: IsOpen
+        type: string
+      - description: 文章id
+        in: query
+        name: articleId
+        type: integer
+      - description: 文章路径
+        in: query
+        name: articleUrl
+        type: string
+      - description: 内容
+        in: query
+        name: content
+        type: string
+      - description: 开始时间
+        in: query
+        name: endTime
+        type: string
+      - description: 组id
+        in: query
+        name: groupId
+        type: integer
+      - description: 标签
+        in: query
+        name: labelIds
+        type: string
+      - description: 库id
+        in: query
+        name: libraryId
+        type: integer
+      - description: 当前页（非分页接口不传）
+        in: query
+        name: pageNum
+        type: integer
+      - description: 每页条数（非分页接口不传）
+        in: query
+        name: pageSize
+        type: integer
+      - description: 父级id
+        in: query
+        name: parentId
+        type: integer
+      - description: 开始时间
+        in: query
+        name: startTime
+        type: string
+      - description: 状态
+        in: query
+        name: status
+        type: string
+      - description: 标题
+        in: query
+        name: title
+        type: string
+      - description: 类型
+        in: query
+        name: typeId
+        type: integer
+      - description: 用户id
+        in: query
+        name: userId
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 获取文章列表
+      tags:
+      - Base - 文章管理
+  /base/baseArticle/removes:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - collectionFormat: csv
+        description: articleIds
+        in: query
+        items:
+          type: integer
+        name: articleIds
+        required: true
+        type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 删除文章（逻辑删除）
+      tags:
+      - Base - 文章管理
+  /base/baseArticleGroup/:groupId:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: groupId
+        in: path
+        name: groupId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 获取组详情
+      tags:
+      - Base - 文章组管理
+  /base/baseArticleGroup/{page}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 开始时间
+        in: query
+        name: endTime
+        type: string
+      - description: 组id
+        in: query
+        name: groupId
+        type: integer
+      - description: 组名
+        in: query
+        name: groupName
+        type: string
+      - description: 库id
+        in: query
+        name: libraryId
+        type: integer
+      - description: 当前页（非分页接口不传）
+        in: query
+        name: pageNum
+        type: integer
+      - description: 每页条数（非分页接口不传）
+        in: query
+        name: pageSize
+        type: integer
+      - description: 开始时间
+        in: query
+        name: startTime
+        type: string
+      - description: 状态
+        in: query
+        name: status
+        type: string
+      - description: 用户id
+        in: query
+        name: userId
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 获取组列表
+      tags:
+      - Base - 文章组管理
+  /base/baseArticleGroup/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: baseArticleGroup
+        in: body
+        name: baseArticleGroup
+        required: true
+        schema:
+          $ref: '#/definitions/model_base.BaseArticleGroup'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 添加组
+      tags:
+      - Base - 文章组管理
+  /base/baseArticleGroup/deletes:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: groupIds
+        in: query
+        name: groupIds
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 删除组（实体删除）
+      tags:
+      - Base - 文章组管理
+  /base/baseArticleGroup/edit:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: baseArticleGroup
+        in: body
+        name: baseArticleGroup
+        required: true
+        schema:
+          $ref: '#/definitions/model_base.BaseArticleGroup'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 修改组
+      tags:
+      - Base - 文章组管理
+  /base/baseArticleGroup/myPage:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 开始时间
+        in: query
+        name: endTime
+        type: string
+      - description: 组id
+        in: query
+        name: groupId
+        type: integer
+      - description: 组名
+        in: query
+        name: groupName
+        type: string
+      - description: 库id
+        in: query
+        name: libraryId
+        type: integer
+      - description: 当前页（非分页接口不传）
+        in: query
+        name: pageNum
+        type: integer
+      - description: 每页条数（非分页接口不传）
+        in: query
+        name: pageSize
+        type: integer
+      - description: 开始时间
+        in: query
+        name: startTime
+        type: string
+      - description: 状态
+        in: query
+        name: status
+        type: string
+      - description: 用户id
+        in: query
+        name: userId
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 获取当前用户的组列表
+      tags:
+      - Base - 文章组管理
+  /base/baseArticleGroup/removes:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: groupIds
+        in: query
+        name: groupIds
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 删除组（逻辑删除）
+      tags:
+      - Base - 文章组管理
+  /base/baseArticleLabel/{labelId}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: labelId
+        in: path
+        name: labelId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 获取标签详情
+      tags:
+      - Base - 文章标签管理
+  /base/baseArticleLabel/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: baseArticleLabel
+        in: body
+        name: baseArticleLabel
+        required: true
+        schema:
+          $ref: '#/definitions/model_base.BaseArticleLabel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 添加标签
+      tags:
+      - Base - 文章标签管理
+  /base/baseArticleLabel/deletes:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: labelIds
+        in: query
+        name: labelIds
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 删除标签（实体删除）
+      tags:
+      - Base - 文章标签管理
+  /base/baseArticleLabel/edit:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: baseArticleLabel
+        in: body
+        name: baseArticleLabel
+        required: true
+        schema:
+          $ref: '#/definitions/model_base.BaseArticleLabel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 修改标签
+      tags:
+      - Base - 文章标签管理
+  /base/baseArticleLabel/myPage:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 开始时间
+        in: query
+        name: endTime
+        type: string
+      - description: 标签id
+        in: query
+        name: labelId
+        type: integer
+      - description: 标签名
+        in: query
+        name: labelName
+        type: string
+      - description: 当前页（非分页接口不传）
+        in: query
+        name: pageNum
+        type: integer
+      - description: 每页条数（非分页接口不传）
+        in: query
+        name: pageSize
+        type: integer
+      - description: 开始时间
+        in: query
+        name: startTime
+        type: string
+      - description: 状态
+        in: query
+        name: status
+        type: string
+      - description: 用户id
+        in: query
+        name: userId
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 获取当前用户的标签列表
+      tags:
+      - Base - 文章标签管理
+  /base/baseArticleLabel/page:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 开始时间
+        in: query
+        name: endTime
+        type: string
+      - description: 标签id
+        in: query
+        name: labelId
+        type: integer
+      - description: 标签名
+        in: query
+        name: labelName
+        type: string
+      - description: 当前页（非分页接口不传）
+        in: query
+        name: pageNum
+        type: integer
+      - description: 每页条数（非分页接口不传）
+        in: query
+        name: pageSize
+        type: integer
+      - description: 开始时间
+        in: query
+        name: startTime
+        type: string
+      - description: 状态
+        in: query
+        name: status
+        type: string
+      - description: 用户id
+        in: query
+        name: userId
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 获取标签列表
+      tags:
+      - Base - 文章标签管理
+  /base/baseArticleLabel/removes:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: labelIds
+        in: query
+        name: labelIds
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 删除标签（逻辑删除）
+      tags:
+      - Base - 文章标签管理
+  /base/baseArticleLibrary/{libraryId}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: libraryId
+        in: path
+        name: libraryId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 获取库详情
+      tags:
+      - Base - 文章库管理
+  /base/baseArticleLibrary/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: baseArticleLibrary
+        in: body
+        name: baseArticleLibrary
+        required: true
+        schema:
+          $ref: '#/definitions/model_base.BaseArticleLibrary'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 添加库
+      tags:
+      - Base - 文章库管理
+  /base/baseArticleLibrary/deletes:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: libraryIds
+        in: query
+        name: libraryIds
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 删除库（实体删除）
+      tags:
+      - Base - 文章库管理
+  /base/baseArticleLibrary/edit:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: baseArticleLibrary
+        in: body
+        name: baseArticleLibrary
+        required: true
+        schema:
+          $ref: '#/definitions/model_base.BaseArticleLibrary'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 修改库
+      tags:
+      - Base - 文章库管理
+  /base/baseArticleLibrary/myPage:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 是否公开库
+        in: query
+        name: IsOpen
+        type: string
+      - description: 开始时间
+        in: query
+        name: endTime
+        type: string
+      - description: 库id
+        in: query
+        name: libraryId
+        type: integer
+      - description: 库名
+        in: query
+        name: libraryName
+        type: string
+      - description: 库的路径
+        in: query
+        name: libraryUrl
+        type: string
+      - description: 当前页（非分页接口不传）
+        in: query
+        name: pageNum
+        type: integer
+      - description: 每页条数（非分页接口不传）
+        in: query
+        name: pageSize
+        type: integer
+      - description: 开始时间
+        in: query
+        name: startTime
+        type: string
+      - description: 状态
+        in: query
+        name: status
+        type: string
+      - description: 用户id
+        in: query
+        name: userId
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 获取当前用户的库列表
+      tags:
+      - Base - 文章库管理
+  /base/baseArticleLibrary/page:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 是否公开库
+        in: query
+        name: IsOpen
+        type: string
+      - description: 开始时间
+        in: query
+        name: endTime
+        type: string
+      - description: 库id
+        in: query
+        name: libraryId
+        type: integer
+      - description: 库名
+        in: query
+        name: libraryName
+        type: string
+      - description: 库的路径
+        in: query
+        name: libraryUrl
+        type: string
+      - description: 当前页（非分页接口不传）
+        in: query
+        name: pageNum
+        type: integer
+      - description: 每页条数（非分页接口不传）
+        in: query
+        name: pageSize
+        type: integer
+      - description: 开始时间
+        in: query
+        name: startTime
+        type: string
+      - description: 状态
+        in: query
+        name: status
+        type: string
+      - description: 用户id
+        in: query
+        name: userId
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 获取库列表
+      tags:
+      - Base - 文章库管理
+  /base/baseArticleLibrary/removes:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: libraryIds
+        in: query
+        name: libraryIds
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 删除库（逻辑删除）
+      tags:
+      - Base - 文章库管理
+  /demo/rabbit/push:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: rabbitData
+        in: body
+        name: rabbitData
+        required: true
+        schema:
+          $ref: '#/definitions/rabbit.RabbitData'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: Rabbit发送数据
+      tags:
+      - Demo - Rabbit
+  /demo/rabbit/start:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: Rabbit开始执行
+      tags:
+      - Demo - Rabbit
+  /file/upload:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 上传文件
+      tags:
+      - Common - 公共接口
+  /sys/getLoginUser:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 获取当前用户的登录信息
+      tags:
+      - System - 用户管理
+  /sys/getRouters:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 获取前端需要的路由
+      tags:
+      - System - 菜单管理
+  /sys/getUserInfo:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 获取当前登录用户信息
+      tags:
+      - System - 用户管理
+  /sys/sysDict/data/{dictCode}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: dictCode
+        in: path
+        name: dictCode
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 获取字典数据详情
+      tags:
+      - System - 字典管理
+  /sys/sysDict/data/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: sysDictData
+        in: body
+        name: sysDictData
+        required: true
+        schema:
+          $ref: '#/definitions/model_sys.SysDictData'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 添加菜单
+      tags:
+      - System - 字典管理
+  /sys/sysDict/data/edit:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: sysDictData
+        in: body
+        name: sysDictData
+        required: true
+        schema:
+          $ref: '#/definitions/model_sys.SysDictData'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 修改菜单
+      tags:
+      - System - 字典管理
+  /sys/sysDict/data/list/{dictType}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: dictType
+        in: path
+        name: dictType
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 获取指定字典数据列表
+      tags:
+      - System - 字典管理
+  /sys/sysDict/data/page:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 样式属性（其他样式扩展）
+        in: query
+        name: cssClass
+        type: string
+      - description: 字典编码
+        in: query
+        name: dictId
+        type: integer
+      - description: 字典标签
+        in: query
+        name: dictLabel
+        type: string
+      - description: 字典排序
+        in: query
+        name: dictSort
+        type: integer
+      - description: 字典类型
+        in: query
+        name: dictType
+        type: string
+      - description: 字典键值
+        in: query
+        name: dictValue
+        type: string
+      - description: 开始时间
+        in: query
+        name: endTime
+        type: string
+      - description: 是否默认（Y是 N否）
+        in: query
+        name: isDefault
+        type: string
+      - description: 表格回显样式
+        in: query
+        name: listClass
+        type: string
+      - description: 当前页（非分页接口不传）
+        in: query
+        name: pageNum
+        type: integer
+      - description: 每页条数（非分页接口不传）
+        in: query
+        name: pageSize
+        type: integer
+      - description: 开始时间
+        in: query
+        name: startTime
+        type: string
+      - description: 状态（0正常 1停用）
+        in: query
+        name: status
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 获取字典数据列表
+      tags:
+      - System - 字典管理
+  /sys/sysDict/data/removeCache:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 删除缓存
+      tags:
+      - System - 管理
+  /sys/sysDict/data/removes:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: dictIds
+        in: query
+        name: dictIds
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 删除菜单[逻辑删除]
+      tags:
+      - System - 管理
+  /sys/sysDict/type/{dictId}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: dictId
+        in: path
+        name: dictId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 获取字典类型详情
+      tags:
+      - System - 字典管理
+  /sys/sysDict/type/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: sysDictType
+        in: body
+        name: sysDictType
+        required: true
+        schema:
+          $ref: '#/definitions/model_sys.SysDictType'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 添加菜单
+      tags:
+      - System - 字典管理
+  /sys/sysDict/type/edit:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: sysDictType
+        in: body
+        name: sysDictType
+        required: true
+        schema:
+          $ref: '#/definitions/model_sys.SysDictType'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 修改菜单
+      tags:
+      - System - 字典管理
+  /sys/sysDict/type/page:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 字典id
+        in: query
+        name: dictId
+        type: integer
+      - description: 字典名称
+        in: query
+        name: dictName
+        type: string
+      - description: 字典类型
+        in: query
+        name: dictType
+        type: string
+      - description: 开始时间
+        in: query
+        name: endTime
+        type: string
+      - description: 当前页（非分页接口不传）
+        in: query
+        name: pageNum
+        type: integer
+      - description: 每页条数（非分页接口不传）
+        in: query
+        name: pageSize
+        type: integer
+      - description: 开始时间
+        in: query
+        name: startTime
+        type: string
+      - description: 状态
+        in: query
+        name: status
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 获取字典类型列表
+      tags:
+      - System - 字典管理
+  /sys/sysDict/type/removes:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: dictIds
+        in: query
+        name: dictIds
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 删除菜单[逻辑删除]
+      tags:
+      - System - 管理
+  /sys/sysMenu/{menuId}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: menuId
+        in: path
+        name: menuId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 获取菜单详情
+      tags:
+      - System - 菜单管理
+  /sys/sysMenu/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: sysMenu
+        in: body
+        name: sysMenu
+        required: true
+        schema:
+          $ref: '#/definitions/model_sys.SysMenu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 添加菜单
+      tags:
+      - System - 菜单管理
+  /sys/sysMenu/delete:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: menuId
+        in: query
+        name: menuId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 删除菜单[物理删除]
+      tags:
+      - System - 菜单管理
+  /sys/sysMenu/edit:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: sysMenu
+        in: body
+        name: sysMenu
+        required: true
+        schema:
+          $ref: '#/definitions/model_sys.SysMenu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 修改菜单
+      tags:
+      - System - 菜单管理
+  /sys/sysMenu/getTree:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: 开始时间
+        in: query
+        name: endTime
+        type: string
+      - description: 菜单名
+        in: query
+        name: menuName
+        type: string
+      - description: 当前页（非分页接口不传）
+        in: query
+        name: pageNum
+        type: integer
+      - description: 每页条数（非分页接口不传）
+        in: query
+        name: pageSize
+        type: integer
+      - description: 角色id
+        in: query
+        name: roleId
+        type: integer
+      - description: 开始时间
+        in: query
+        name: startTime
+        type: string
+      - description: 状态
+        in: query
+        name: status
+        type: string
+      - description: 用户id
+        in: query
+        name: userId
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 获取菜单管理树表
+      tags:
+      - System - 菜单管理
+  /sys/sysMenu/remove:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: Authorization
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: menuId
+        in: query
+        name: menuId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/result.Result'
+      summary: 删除菜单[逻辑删除]
+      tags:
+      - System - 菜单管理
+swagger: "2.0"

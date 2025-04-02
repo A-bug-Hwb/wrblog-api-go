@@ -1,0 +1,82 @@
+server:
+  port: 12110
+  host: 127.0.0.1
+  https: false
+#  Debug模式、Release模式和Test模式。
+  mode: debug
+database:
+  mysql:
+    # 默认数据源(固定master，不可更改)
+    source-name: master
+    master:
+      host: 120.26.170.98
+      port: 3316
+      db-name: wr-sys
+      username: wr-sys
+      password: wenbin129
+      charset: utf8mb4
+      timeout: 10s
+    salves:
+      - host: 120.26.170.98
+        port: 3316
+        db-name: wr-file
+        username: wr-file
+        password: wenbin129
+        charset: utf8mb4
+        timeout: 10s
+      - host: 120.26.170.98
+        port: 3316
+        db-name: wr-base
+        username: wr-base
+        password: wenbin129
+        charset: utf8mb4
+        timeout: 10s
+redis:
+  addr: 127.0.0.1
+  port: 6379
+  db: 1
+  # 如果没配置则不填
+  password:
+  # 连接池最大连接数
+  pool-size: 1000
+  # 最大重试次数
+  max-retries: 10
+  # 超时时间ms
+  dial-timeout: 180000
+  # 取值超时时间
+  read-timeout: 60000
+  # 写入超时时间
+  write-timeout: 60000
+config:
+  file-prefix: /profile
+  profile: ./uploadPath
+  file-max-size: 200M
+  # ip白名单
+  ip-white:
+    - 192.168.110.44
+  token:
+    # 令牌自定义标识
+    header: Authorization
+    # 令牌密钥
+    secret: githubabughwbwrblog
+    # 令牌有效期（分钟）
+    expire-time: 60
+  captcha: math
+  key:
+    # 加密公钥
+    public-key: LS0tLS1CRUdJTiBSU0EgUFVCTElDIEtFWS0tLS0tCk1JR2ZNQTBHQ1NxR1NJYjNEUUVCQVFVQUE0R05BRENCaVFLQmdRREh6dXR4VlZPZmtnb2R6VFJYYm9VdiswZFgKT3VtdVpHUzJUaldlYUpBbk04dXNYN2g4bTlsNlBjRGx0dmdqdlBNODJxVzlkWVdCMnU3c09CclFvNUFLTVA5bQo1V25ud2lldHl1RjZoZnhMMDhHdkkyWVQ3cER4dHJiQTE3WWVLMmNYSm1tOXFkZENxcFhMdUE1aDU4aXFlNWpSCnoxbENUMGtnZnFJYzBRdC8xUUlEQVFBQgotLS0tLUVORCBSU0EgUFVCTElDIEtFWS0tLS0tCg==
+    # 加密私钥
+    private-key: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlDWEFJQkFBS0JnUURIenV0eFZWT2ZrZ29kelRSWGJvVXYrMGRYT3VtdVpHUzJUaldlYUpBbk04dXNYN2g4Cm05bDZQY0RsdHZnanZQTTgycVc5ZFlXQjJ1N3NPQnJRbzVBS01QOW01V25ud2lldHl1RjZoZnhMMDhHdkkyWVQKN3BEeHRyYkExN1llSzJjWEptbTlxZGRDcXBYTHVBNWg1OGlxZTVqUnoxbENUMGtnZnFJYzBRdC8xUUlEQVFBQgpBb0dBWVNNcWVWV25LdHQveVk4NmxBcnArektwTXpJejZ4RnBtT3VheTZFLys1OEZ0STV3alR2alZiZHg4UHVyCjFRd0dJSjZYbHV6c2MvM3d5NnhXOVBtZmkwaHl6L1lFVWtOV21rUDF3YTFqOVZXaFgwbzI2RExHenFNeld5OXoKblVoY042VmdjS2dXQTJiU0krSUQyQTRINE1XNytYN201cEYzMkRtU1J0MGFZRUVDUVFEVGhXclk5YTRrNjMyQQptMXVKbG9YamhmaC84c045SjM5djlrMlM1d3loRThCcDFRMWNHY0JZT2dKa2pNOEhaaUlTcm8wVlloMk5BVG5aCjVjMEMxa3JSQWtFQThkTDUwUG8yZTdzTC9mRXg3bGp4bEVyUHlITVlEbjZDdFNyY2hQNUdsRFJYRWNBRlNOdVMKWG1ZRWFlS3k5ZnUyT0V4R3ZvS05xdXVLenl3Q2F4WmR4UUpCQUp3Y2Z2UnJ0c0JXOFlTbXBOT1NQWFRrSHJqSQpBbEh2Z2RXdmNpZDIwVkpjMG9rSmpsZW9SZGFYMGNaR1NsSUtwaUVscE1qZ1pqRDRjNnNIT056Y0xkRUNRSDlGCmhtMVNBdkxEMHQvbjNWdVFQRFRMMnVlb2kzUzFhSjFvM1g2eFJQd2pQOS83cTh4WW80UkROUGQxZExLNXM0R1YKdzNYb3lCNjRzT213UStXUWMvRUNRSFo2U0xjcEZXdzNjK21CWk9pbUNwYWZIVnZqa2t3NE9XZWVaenBvMXpNaQp1UlVEM0NRY1RpSXhaVjVJZmRjdE56M1d6TVF2ZUhzSDBSRzdjWm5ONkdZPQotLS0tLUVORCBSU0EgUFJJVkFURSBLRVktLS0tLQo=
+logger:
+  log-path: ./logs
+  level: debug
+  # 日志最大保存时间(天)
+  max-age: 7
+  # 日志文件分隔时间(小时)
+  rotation-time: 24
+rabbit:
+  host: 120.26.170.98
+  port: 5672
+  v-host: /wrblog_vhost
+  username: wrblog
+  password: wenbin129
