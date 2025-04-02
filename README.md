@@ -1,6 +1,6 @@
 # <center> wrblog-api-go </center>
 
-## 1. 本项目采用Gin+Gorm框架
+## 1. 本项目后端采用Gin+Gorm框架，前端采用Vue+Ts
 
 ### 项目后端地址：`https://gitee.com/H-w-b/wrblog-api-go.git`
 ### 项目前端地址：`https://gitee.com/H-w-b/wrblog-web.git`
